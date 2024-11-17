@@ -44,22 +44,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const taskItem = document.createElement("li");
       taskItem.className = `task-item ${task.completed ? "completed" : ""}`;
       taskItem.dataset.index = index;
+      taskItem.draggable = true;
 
       taskItem.innerHTML = `
-          <div>
-            <input type="checkbox" ${
-              task.completed ? "checked" : ""
-            } data-index="${index}">
-            <span>${task.description}</span>
-          </div>
-          <button data-index="${index}">🗑️</button>
-        `;
+        <div>
+          <input type="checkbox" ${task.completed ? "checked" : ""} data-index="${index}">
+          <span>${task.description}</span>
+        </div>
+        <button data-index="${index}">🗑️</button>
+      `;
 
       taskList.appendChild(taskItem);
     });
 
+    // Enable drag-and-drop functionality
+    enableDragAndDrop();
+
     // Update progress bar
-    const completedTasks = tasks.filter((task) => task.completed).length;
+    const completedTasks = tasks.filter(task => task.completed).length;
     const totalTasks = tasks.length;
     const completionRate = totalTasks ? (completedTasks / totalTasks) * 100 : 0;
 
@@ -92,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mark all tasks as completed
   function markAllTasksAsCompleted() {
-    tasks = tasks.map((task) => ({ ...task, completed: true }));
+    tasks = tasks.map(task => ({ ...task, completed: true }));
     renderTasks();
   }
 
@@ -104,7 +106,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Unmark all completed tasks
   function unmarkAllTasks() {
-    tasks = tasks.map((task) => ({ ...task, completed: false }));
+    tasks = tasks.map(task => ({ ...task, completed: false }));
+    renderTasks();
+  }
+
+  // Enable drag-and-drop functionality
+  function enableDragAndDrop() {
+    const taskItems = document.querySelectorAll(".task-item");
+
+    taskItems.forEach((item) => {
+      item.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", item.dataset.index);
+        item.classList.add("dragging");
+      });
+
+      item.addEventListener("dragend", () => {
+        item.classList.remove("dragging");
+        updateTaskOrder();
+      });
+    });
+
+    taskList.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const draggingItem = document.querySelector(".dragging");
+      const afterElement = getDragAfterElement(taskList, e.clientY);
+      if (afterElement == null) {
+        taskList.appendChild(draggingItem);
+      } else {
+        taskList.insertBefore(draggingItem, afterElement);
+      }
+    });
+  }
+
+  // Get the element after which the dragged item should be inserted
+  function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll(".task-item:not(.dragging)")];
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      } else {
+        return closest;
+      }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  // Update task order after drag-and-drop
+  function updateTaskOrder() {
+    const reorderedTasks = [];
+    const taskItems = document.querySelectorAll(".task-item");
+    taskItems.forEach((item) => {
+      const index = item.dataset.index;
+      reorderedTasks.push(tasks[index]);
+    });
+    tasks = reorderedTasks;
     renderTasks();
   }
 
