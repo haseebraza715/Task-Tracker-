@@ -1,0 +1,262 @@
+/* General Styling */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+/* Theme Variables */
+:root {
+  --background-color: #f2f2f2; /* Light mode background */
+  --container-bg: #ffffff;
+  --text-color: #333333;
+  --input-border: #ddd;
+  --hover-bg: #f7f9fc;
+  --completed-bg: #e3f8e5;
+  --completed-text: #4caf50;
+  --button-bg: #007bff;
+  --button-hover-bg: #0056b3;
+  --progress-bg: #007bff;
+  --bulk-button-bg: #f4f4f9;
+}
+
+body.dark {
+  --background-color: #121212; /* Dark mode background */
+  --container-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --input-border: #444444;
+  --hover-bg: #333333;
+  --completed-bg: #2e7d32;
+  --completed-text: #66bb6a;
+  --button-bg: #1e88e5;
+  --button-hover-bg: #1565c0;
+  --progress-bg: #1e88e5;
+  --bulk-button-bg: #2c2c2c;
+}
+
+/* Task Tracker Container */
+.task-tracker {
+  width: 600px; /* Increased width */
+  padding: 35px; /* Increased padding */
+  background: var(--container-bg);
+  border-radius: 20px; /* More rounded corners */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Slightly heavier shadow */
+  text-align: center;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header h2 {
+  font-size: 32px; /* Larger font size */
+  font-weight: 700;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 24px; /* Larger icon */
+  cursor: pointer;
+  color: var(--text-color);
+  transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover {
+  transform: rotate(20deg);
+}
+
+/* Input Section */
+.input-container {
+  display: flex;
+  gap: 15px; /* Increased gap */
+  margin-bottom: 25px;
+}
+
+#task-input {
+  flex: 1;
+  padding: 16px; /* Larger padding */
+  border: 2px solid var(--input-border);
+  border-radius: 10px; /* More rounded input */
+  font-size: 16px; /* Larger font size */
+  color: var(--text-color);
+  background: var(--container-bg);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#task-input:focus {
+  border-color: var(--button-bg);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+#add-task-button {
+  padding: 16px 20px; /* Larger button */
+  font-size: 18px; /* Larger font size */
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#add-task-button:hover {
+  background-color: var(--button-hover-bg);
+  transform: scale(1.05);
+}
+
+/* Progress Bar */
+#progress-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#task-progress {
+  width: 100%;
+  height: 12px; /* Thicker progress bar */
+  border-radius: 6px;
+  appearance: none;
+  outline: none;
+  background: #e0e0e0;
+}
+
+#task-progress::-webkit-progress-bar {
+  border-radius: 6px;
+  background: #e0e0e0;
+}
+
+#task-progress::-webkit-progress-value {
+  border-radius: 6px;
+  background: var(--progress-bg);
+}
+
+#progress-text {
+  font-size: 16px; /* Larger font */
+  color: var(--text-color);
+  margin-top: 8px;
+  display: block;
+}
+
+/* Task List Section */
+#task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 400px; /* Increased height */
+  overflow-y: auto;
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  background-color: var(--container-bg);
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px; /* Larger padding */
+  background: var(--container-bg);
+  border-bottom: 1px solid var(--input-border);
+  transition: background-color 0.3s;
+}
+
+.task-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.task-item.completed {
+  background-color: var(--completed-bg);
+  color: var(--completed-text);
+  text-decoration: line-through;
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 12px; /* Adjusted for larger task items */
+  cursor: pointer;
+}
+
+.task-item button {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  font-size: 18px; /* Larger delete button */
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.task-item button:hover {
+  color: #ff1a1a;
+}
+
+/* Bulk Actions Section */
+.bulk-actions {
+  margin-top: 25px; /* Increased margin */
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* More space between buttons */
+}
+
+.bulk-actions button {
+  flex: 1;
+  padding: 15px; /* Larger padding */
+  font-size: 16px; /* Larger font size */
+  border: none;
+  border-radius: 8px;
+  background-color: var(--bulk-button-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bulk-actions button:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Scrollbar Styling */
+#task-list::-webkit-scrollbar {
+  width: 10px; /* Slightly wider scrollbar */
+}
+
+#task-list::-webkit-scrollbar-track {
+  background: var(--background-color);
+  border-radius: 8px;
+}
+
+#task-list::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 8px;
+}
+
+#task-list::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .task-tracker {
+    width: 90%;
+  }
+
+  #task-input {
+    font-size: 15px;
+  }
+
+  #add-task-button {
+    font-size: 16px;
+  }
+
+  .bulk-actions button {
+    font-size: 14px;
+  }
+}

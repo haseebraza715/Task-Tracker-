@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="task-tracker">
+      <!-- Header Section with Theme Toggle -->
+      <div class="header">
+        <h2>Task Tracker</h2>
+        <button
+          id="theme-toggle"
+          title="Switch Theme"
+          aria-label="Toggle Dark Mode"
+        >
+          🌙
+        </button>
+      </div>
+
+      <!-- Input Section for Adding Tasks -->
+      <div class="input-container">
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Start writing and press Enter to create a task"
+          aria-label="Task Input"
+        />
+        <button id="add-task-button" aria-label="Add Task">➤</button>
+      </div>
+
+      <!-- Progress Bar Section -->
+      <div id="progress-container">
+        <progress
+          id="task-progress"
+          value="0"
+          max="100"
+          aria-label="Task Progress"
+        ></progress>
+        <span id="progress-text">0% Completed</span>
+      </div>
+
+      <!-- Task List Section -->
+      <ul id="task-list" aria-label="Task List">
+        <!-- Tasks will be dynamically rendered here -->
+      </ul>
+
+      <!-- Bulk Action Buttons -->
+      <div class="bulk-actions">
+        <button
+          id="mark-all-completed"
+          aria-label="Mark All Tasks as Completed"
+        >
+          Mark All Completed
+        </button>
+        <button id="delete-all-tasks" aria-label="Delete All Tasks">
+          Delete All Tasks
+        </button>
+        <button
+          id="unmark-all-completed"
+          aria-label="Unmark All Completed Tasks"
+        >
+          Unmark All Completed
+        </button>
+      </div>
+    </div>
+
+    <script src="index.js" defer></script>
+  </body>
+</html>
